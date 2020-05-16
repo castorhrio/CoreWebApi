@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace YunXun.Dapper.Lib
+﻿namespace YunXun.Dapper.Lib
 {
+    using System.Security.Cryptography;
+    using System.Text;
+
     /// <summary>
-    /// 加密方法
+    /// 加密方法.
     /// </summary>
     public class Encrypt
     {
         /// <summary>
-        /// 生成32位MD5加密字符串
+        /// 生成32位MD5加密字符串.
         /// </summary>
-        /// <param name="strInput"></param>
-        /// <returns></returns>
+        /// <param name="strInput">.</param>
+        /// <returns>.</returns>
         public static string Md5(string strInput)
         {
             MD5 md5Hash = MD5.Create();
@@ -31,11 +29,11 @@ namespace YunXun.Dapper.Lib
         }
 
         /// <summary>
-        /// 生成16位Md5加密字符串
+        /// 生成16位Md5加密字符串.
         /// </summary>
-        /// <param name="strInput"></param>
-        /// <param name="point"></param>
-        /// <returns></returns>
+        /// <param name="strInput">.</param>
+        /// <param name="point">.</param>
+        /// <returns>.</returns>
         public static string Md5(string strInput, bool point = false)
         {
             MD5 md5Hash = MD5.Create();

@@ -1,26 +1,38 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using YunXun.Dapper.IRepository;
-using YunXun.Entity.Models;
-using YunXun.Entity.ViewModels;
-using Microsoft.AspNetCore.Hosting;
-using System.Collections;
-using YunXun.Common.DTO;
-using YunXun.Common;
-
-namespace YunXun.WebApi.Controllers
+﻿namespace YunXun.WebApi.Controllers
 {
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
+    using YunXun.Common.DTO;
+    using YunXun.Dapper.IRepository;
+    using YunXun.Entity.Models;
+    using YunXun.Entity.ViewModels;
+
+    /// <summary>
+    /// Defines the <see cref="FoodController" />.
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class FoodController : ControllerBase
     {
+        /// <summary>
+        /// Defines the foodRepository.
+        /// </summary>
         private readonly IFoodRepository foodRepository;
+
+        /// <summary>
+        /// Defines the _hostingEnvironment.
+        /// </summary>
         private readonly IHostingEnvironment _hostingEnvironment;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FoodController"/> class.
+        /// </summary>
+        /// <param name="_FoodRepository">The _FoodRepository<see cref="IFoodRepository"/>.</param>
+        /// <param name="hostingEnvironment">The hostingEnvironment<see cref="IHostingEnvironment"/>.</param>
         public FoodController(IFoodRepository _FoodRepository, IHostingEnvironment hostingEnvironment)
         {
             foodRepository = _FoodRepository;
@@ -28,43 +40,46 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 获取食物列表 旧版
+        /// 获取食物列表 旧版.
         /// </summary>
-        /// <param name="pageIndex">下标</param>
-        /// <param name="pageSize">每页大小</param>
-        /// <param name="SortRule">排序方式 1 desc 0 asc</param>
-        /// <returns></returns>
+        /// <param name="pageIndex">下标.</param>
+        /// <param name="pageSize">每页大小.</param>
+        /// <param name="SortRule">排序方式 1 desc 0 asc.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<FoodEntity>> GetListByPage(int pageIndex, int pageSize, int SortRule)
         {
             return await foodRepository.GetListByPage(pageIndex, pageSize, SortRule);
         }
+
         /// <summary>
-        /// 获取食物列表 新版
+        /// 获取食物列表 新版.
         /// </summary>
-        /// <param name="models"></param>
-        /// <returns></returns>
+        /// <param name="models">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<FoodEntity>> GetList(QueryDTO models)
         {
             var list = await foodRepository.GetList(models);
             return list;
         }
+
         /// <summary>
-        /// 获取食物详细信息
+        /// 获取食物详细信息.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="id">The id<see cref="int"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<FoodEntity>> GetDetail(int id)
         {
             return await foodRepository.Detail(id);
         }
+
         /// <summary>
-        /// 增加
+        /// 增加.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="entity">The entity<see cref="FoodEntity"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<FoodEntity>> Add([FromForm]FoodEntity entity)
         {
@@ -98,7 +113,7 @@ namespace YunXun.WebApi.Controllers
                         stream.Flush();
                     }
                     //保存到数据库
-                    string filePath =  "/wwwroot/Food/" + newFileName;
+                    string filePath = "/wwwroot/Food/" + newFileName;
                     entity.image = filePath;
                 }
                 else
@@ -113,11 +128,12 @@ namespace YunXun.WebApi.Controllers
 
             return await foodRepository.Add(entity);
         }
+
         /// <summary>
-        /// 修改
+        /// 修改.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="entity">The entity<see cref="FoodEntity"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<FoodEntity>> Update([FromForm]FoodEntity entity)
         {
@@ -165,11 +181,12 @@ namespace YunXun.WebApi.Controllers
 
             return await foodRepository.Update(entity);
         }
+
         /// <summary>
-        /// 删除
+        /// 删除.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="entity">The entity<see cref="FoodEntity"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<FoodEntity>> Delete(FoodEntity entity)
         {
@@ -183,10 +200,10 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 批量删除
+        /// 批量删除.
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<FoodEntity>> DeleteList([FromBody]DeleteDTO model)
         {

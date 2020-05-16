@@ -1,19 +1,26 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using YunXun.Common;
-using YunXun.Dapper.DataFactory;
-using YunXun.Dapper.IRepository;
-using YunXun.Entity.Models;
-using YunXun.Common.DTO;
-using YunXun.Entity.ViewModels;
-
-namespace YunXun.Dapper.Repository
+﻿namespace YunXun.Dapper.Repository
 {
+    using Microsoft.Extensions.Options;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading.Tasks;
+    using YunXun.Common;
+    using YunXun.Common.DTO;
+    using YunXun.Dapper.DataFactory;
+    using YunXun.Dapper.IRepository;
+    using YunXun.Entity.Models;
+    using YunXun.Entity.ViewModels;
+
+    /// <summary>
+    /// Defines the <see cref="SickRepository" />.
+    /// </summary>
     public class SickRepository : RepositoryBase<SickEntity, int>, ISickRepository
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SickRepository"/> class.
+        /// </summary>
+        /// <param name="options">The options<see cref="IOptionsSnapshot{DbOption}"/>.</param>
         public SickRepository(IOptionsSnapshot<DbOption> options)
         {
             dbOption = options.Get("DBConnect");
@@ -23,11 +30,12 @@ namespace YunXun.Dapper.Repository
             }
             dbConnection = ConnectionFactory.CreateConnection(dbOption.DbType, dbOption.ConnectionString);
         }
+
         /// <summary>
-        /// 获取详细信息
+        /// 获取详细信息.
         /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <param name="Id">.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<SickEntity>> Detail(int Id)
         {
             string detailSql = @"SELECT * FROM dbo.tbSick WHERE id=@id";
@@ -57,10 +65,9 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 获取总记录数
+        /// 获取总记录数.
         /// </summary>
-        /// <param name="sqlStr">查询语句</param>
-        /// <returns>返回记录总数</returns>
+        /// <returns>返回记录总数.</returns>
         public async Task<BaseResult<SickEntity>> GetCount()
         {
             string countSql = @"SELECT count(id) FROM dbo.tbSick where IsDelete=0";
@@ -90,11 +97,12 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        ///   获取分页数据  旧版
+        /// 获取分页数据  旧版.
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageSize">页数</param>
-        /// <returns></returns>
+        /// <param name="pageIndex">页码.</param>
+        /// <param name="pageSize">页数.</param>
+        /// <param name="SortRule">The SortRule<see cref="int"/>.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<SickEntity>> GetListByPage(int pageIndex, int pageSize, int SortRule = 1)
         {
             string tableName = "tbSick";
@@ -148,6 +156,11 @@ namespace YunXun.Dapper.Repository
             return result;
         }
 
+        /// <summary>
+        /// The GetList.
+        /// </summary>
+        /// <param name="models">The models<see cref="SickQueryDTO"/>.</param>
+        /// <returns>The <see cref="Task{BaseResult{SickEntity}}"/>.</returns>
         public async Task<BaseResult<SickEntity>> GetList(SickQueryDTO models)
         {
             string tableName = "tbSick";
@@ -202,10 +215,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 新增
+        /// 新增.
         /// </summary>
-        /// <param name="entity">数据实体</param>
-        /// <returns>返回主键值</returns>
+        /// <param name="entity">数据实体.</param>
+        /// <returns>返回主键值.</returns>
         public async Task<BaseResult<SickEntity>> Add(SickEntity entity)
         {
             string insertSql = @"INSERT INTO dbo.tbSick(title, overview,acupoint,pathogeny,analysis,food) VALUES(@title, @overview,@acupoint,@pathogeny,@analysis,@food) select @@identity";
@@ -233,10 +246,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 修改
+        /// 修改.
         /// </summary>
-        /// <param name="entity">数据实体</param>
-        /// <returns>返回主键值</returns>
+        /// <param name="entity">数据实体.</param>
+        /// <returns>返回主键值.</returns>
         public async Task<BaseResult<SickEntity>> Updata(SickEntity entity)
         {
             StringBuilder sb = new StringBuilder();
@@ -255,11 +268,12 @@ namespace YunXun.Dapper.Repository
             }
             return result;
         }
+
         /// <summary>
-        /// 删除 逻辑删除
+        /// 删除 逻辑删除.
         /// </summary>
-        /// <param name="entity">数据实体</param>
-        /// <returns>返回主键值</returns>
+        /// <param name="entity">数据实体.</param>
+        /// <returns>返回主键值.</returns>
         public async Task<BaseResult<SickEntity>> Delete(SickEntity entity)
         {
             StringBuilder sb = new StringBuilder();
@@ -279,6 +293,5 @@ namespace YunXun.Dapper.Repository
             }
             return result;
         }
-
     }
 }

@@ -1,14 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace YunXun.WebApi.Unit
+﻿namespace YunXun.WebApi.Unit
 {
-    public class UserOperationException: Exception
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="UserOperationException" />.
+    /// </summary>
+    public class UserOperationException : Exception
     {
-        public UserOperationException() { }
-        public UserOperationException(string message) : base(message) { }
-        public UserOperationException(string message, Exception innerException) : base(message, innerException) { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserOperationException"/> class.
+        /// </summary>
+        public UserOperationException()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserOperationException"/> class.
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/>.</param>
+        public UserOperationException(string message) : base(message)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserOperationException"/> class.
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/>.</param>
+        /// <param name="innerException">The innerException<see cref="Exception"/>.</param>
+        public UserOperationException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

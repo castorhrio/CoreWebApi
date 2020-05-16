@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using YunXun.Common.DTO;
-
-namespace YunXun.Common.DTO
+﻿namespace YunXun.Common.DTO
 {
+    /// <summary>
+    /// Defines the <see cref="UserQueryDTO" />.
+    /// </summary>
     public class UserQueryDTO : QueryDTO
     {
         /// <summary>
-        /// 用户名 
+        /// Gets or sets the userName
+        /// 用户名.
         /// </summary>
         public string userName { get; set; }
     }

@@ -1,19 +1,37 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace YunXun.Jwt
+﻿namespace YunXun.Jwt
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Defines the <see cref="UseJwtMiddleware" />.
+    /// </summary>
     public class UseJwtMiddleware
     {
-
+        /// <summary>
+        /// Defines the _next.
+        /// </summary>
         private readonly RequestDelegate _next;
+
+        /// <summary>
+        /// Defines the _jwtEntity.
+        /// </summary>
         private JwtEntity _jwtEntity = new JwtEntity();
+
+        /// <summary>
+        /// Defines the _jwt.
+        /// </summary>
         private IJwt _jwt;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UseJwtMiddleware"/> class.
+        /// </summary>
+        /// <param name="next">The next<see cref="RequestDelegate"/>.</param>
+        /// <param name="configration">The configration<see cref="IConfiguration"/>.</param>
+        /// <param name="jwt">The jwt<see cref="IJwt"/>.</param>
         public UseJwtMiddleware(RequestDelegate next, IConfiguration configration, IJwt jwt)
         {
             _next = next;
@@ -22,10 +40,10 @@ namespace YunXun.Jwt
         }
 
         /// <summary>
-        /// 异步调用
+        /// 异步调用.
         /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
+        /// <param name="context">.</param>
+        /// <returns>.</returns>
         public Task InvokeAsync(HttpContext context)
         {
             if (_jwtEntity.IgnoreUrls.Contains(context.Request.Path))
@@ -61,16 +79,17 @@ namespace YunXun.Jwt
             }
         }
     }
+
     /// <summary>
-    /// 扩展方法，将中间件暴露出去
+    /// 扩展方法，将中间件暴露出去.
     /// </summary>
     public static class UseUseJwtMiddlewareExtensions
     {
         /// <summary>
-        /// 权限检查
+        /// 权限检查.
         /// </summary>
-        /// <param name="builder"></param>
-        /// <returns></returns>
+        /// <param name="builder">.</param>
+        /// <returns>.</returns>
         public static IApplicationBuilder UseJwt(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<UseJwtMiddleware>();

@@ -1,20 +1,21 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
-
-namespace YunXun.Dapper.DataFactory
+﻿namespace YunXun.Dapper.DataFactory
 {
+    using MySql.Data.MySqlClient;
+    using System;
+    using System.Data;
+    using System.Data.SqlClient;
+
+    /// <summary>
+    /// Defines the <see cref="ConnectionFactory" />.
+    /// </summary>
     public class ConnectionFactory
     {
-     /// <summary>
-     /// 获取数据库连接
-     /// </summary>
-     /// <param name="dbtype">数据库类型</param>
-     /// <param name="conStr">数据库连接字符串</param>
-     /// <returns>数据库连接</returns>
+        /// <summary>
+        /// 获取数据库连接.
+        /// </summary>
+        /// <param name="dbtype">数据库类型.</param>
+        /// <param name="strConn">The strConn<see cref="string"/>.</param>
+        /// <returns>数据库连接.</returns>
         public static IDbConnection CreateConnection(string dbtype, string strConn)
         {
             if (string.IsNullOrEmpty(dbtype))
@@ -30,11 +31,11 @@ namespace YunXun.Dapper.DataFactory
         }
 
         /// <summary>
-        /// 获取数据库连接
+        /// 获取数据库连接.
         /// </summary>
-        /// <param name="dbType">数据库类型</param>
-        /// <param name="conStr">数据库连接字符串</param>
-        /// <returns>数据库连接</returns>
+        /// <param name="dbType">数据库类型.</param>
+        /// <param name="strConn">The strConn<see cref="string"/>.</param>
+        /// <returns>数据库连接.</returns>
         public static IDbConnection CreateConnection(DatabaseType dbType, string strConn)
         {
             IDbConnection connection = null;
@@ -57,10 +58,10 @@ namespace YunXun.Dapper.DataFactory
         }
 
         /// <summary>
-        /// 转换数据库类型
+        /// 转换数据库类型.
         /// </summary>
-        /// <param name="dbtype">数据库类型字符串</param>
-        /// <returns>数据库类型</returns>
+        /// <param name="dbtype">数据库类型字符串.</param>
+        /// <returns>数据库类型.</returns>
         public static DatabaseType GetDataBaseType(string dbtype)
         {
             DatabaseType returnValue = DatabaseType.SqlServer;

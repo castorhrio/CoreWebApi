@@ -1,48 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using YunXun.Dapper.IRepository;
-using YunXun.Entity.Models;
-using YunXun.Entity.ViewModels;
-using YunXun.Common.DTO;
-
-namespace YunXun.WebApi.Controllers
+﻿namespace YunXun.WebApi.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Threading.Tasks;
+    using YunXun.Common.DTO;
+    using YunXun.Dapper.IRepository;
+    using YunXun.Entity.Models;
+    using YunXun.Entity.ViewModels;
+
     /// <summary>
-    /// 产后疾病
+    /// 产后疾病.
     /// </summary>
-    //[]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class SickController : ControllerBase
     {
+        /// <summary>
+        /// Defines the sickRepository.
+        /// </summary>
         private readonly ISickRepository sickRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SickController"/> class.
+        /// </summary>
+        /// <param name="_sickRepository">The _sickRepository<see cref="ISickRepository"/>.</param>
         public SickController(ISickRepository _sickRepository)
         {
             sickRepository = _sickRepository;
         }
 
         /// <summary>
-        /// 获取产后疾病列表 旧版
+        /// 获取产后疾病列表 旧版.
         /// </summary>
-        /// <param name="pageIndex">下标</param>
-        /// <param name="pageSize">每页大小</param>
-        /// <param name="SortRule">排序方式 1 desc 0 asc</param>
-        /// <returns></returns>
+        /// <param name="pageIndex">下标.</param>
+        /// <param name="pageSize">每页大小.</param>
+        /// <param name="SortRule">排序方式 1 desc 0 asc.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<SickEntity>> GetListByPage(int pageIndex, int pageSize, int SortRule)
         {
             var list = await sickRepository.GetListByPage(pageIndex, pageSize, SortRule);
             return list;
         }
+
         /// <summary>
-        /// 获取产后疾病列表  新版
+        /// 获取产后疾病列表  新版.
         /// </summary>
-        /// <param name="models"></param>
-        /// <returns></returns>
+        /// <param name="models">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<SickEntity>> GetList(SickQueryDTO models)
         {
@@ -51,20 +56,21 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 获取疾病详细信息
+        /// 获取疾病详细信息.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="id">The id<see cref="int"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<SickEntity>> GetDetail(int id)
         {
             return await sickRepository.Detail(id);
         }
+
         /// <summary>
-        /// 增加
+        /// 增加.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="entity">The entity<see cref="SickEntity"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<SickEntity>> Add(SickEntity entity)
         {
@@ -72,10 +78,10 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 修改
+        /// 修改.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="entity">The entity<see cref="SickEntity"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<SickEntity>> Updata(SickEntity entity)
         {
@@ -87,11 +93,12 @@ namespace YunXun.WebApi.Controllers
             }
             return await sickRepository.Updata(entity);
         }
+
         /// <summary>
-        /// 删除
+        /// 删除.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="entity">The entity<see cref="SickEntity"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<SickEntity>> Delete(SickEntity entity)
         {
@@ -105,10 +112,10 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 批量删除
+        /// 批量删除.
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<SickEntity>> DeleteList([FromBody]DeleteDTO model)
         {

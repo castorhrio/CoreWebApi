@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YunXun.Common.DTO
+﻿namespace YunXun.Common.DTO
 {
+    /// <summary>
+    /// Defines the <see cref="QueryDTO" />.
+    /// </summary>
     public class QueryDTO
     {
+        /// <summary>
+        /// Defines the PageIndex.
+        /// </summary>
         private int PageIndex;
 
         /// <summary>
-        /// 第几页
+        /// Gets or sets the pageIndex
+        /// 第几页.
         /// </summary>
         public int pageIndex
         {
@@ -28,9 +31,15 @@ namespace YunXun.Common.DTO
                 PageIndex = value;
             }
         }
-        private int PageSize;
+
         /// <summary>
-        /// 一页多少条数据
+        /// Defines the PageSize.
+        /// </summary>
+        private int PageSize;
+
+        /// <summary>
+        /// Gets or sets the pageSize
+        /// 一页多少条数据.
         /// </summary>
         public int pageSize
         {
@@ -49,10 +58,15 @@ namespace YunXun.Common.DTO
                 PageSize = value;
             }
         }
+
+        /// <summary>
+        /// Defines the SortRule.
+        /// </summary>
         private int SortRule;
 
         /// <summary>
-        /// 排序
+        /// Gets or sets the sortRule
+        /// 排序.
         /// </summary>
         public int sortRule
         {
@@ -67,8 +81,10 @@ namespace YunXun.Common.DTO
             }
             set { SortRule = value; }
         }
+
         /// <summary>
-        /// 名称
+        /// Gets or sets the name
+        /// 名称.
         /// </summary>
         public string name { get; set; }
     }

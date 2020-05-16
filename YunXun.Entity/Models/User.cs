@@ -1,31 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-
-namespace YunXun.Entity.Models
+﻿namespace YunXun.Entity.Models
 {
+    /// <summary>
+    /// Defines the <see cref="UserEntity" />.
+    /// </summary>
     public class UserEntity : BaseEntity<int>
     {
-        public int userId { get; set; }
         /// <summary>
-        /// 用户名 必传
+        /// Gets or sets the userId.
+        /// </summary>
+        public int userId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the userName
+        /// 用户名 必传.
         /// </summary>
         public string userName { get; set; }
+
         /// <summary>
-        /// 密码 必传
+        /// Gets or sets the passWord
+        /// 密码 必传.
         /// </summary>
         public string passWord { get; set; }
+
         /// <summary>
-        /// 年龄
+        /// Gets or sets the age
+        /// 年龄.
         /// </summary>
         public int age { get; set; }
+
         /// <summary>
-        /// 是否删除
+        /// Gets or sets the isDelete
+        /// 是否删除.
         /// </summary>
         public int isDelete { get; set; }
+
         /// <summary>
-        /// 是否管理员1是0不是
+        /// Gets or sets the isManager
+        /// 是否管理员1是0不是.
         /// </summary>
         public int isManager { get; set; }
     }

@@ -1,20 +1,26 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using YunXun.Common;
-using YunXun.Dapper.DataFactory;
-using YunXun.Dapper.IRepository;
-using YunXun.Entity.Models;
-using YunXun.Entity.ViewModels;
-using YunXun.Common.DTO;
-using AutoMapper;
-
-namespace YunXun.Dapper.Repository
+﻿namespace YunXun.Dapper.Repository
 {
+    using Microsoft.Extensions.Options;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading.Tasks;
+    using YunXun.Common;
+    using YunXun.Common.DTO;
+    using YunXun.Dapper.DataFactory;
+    using YunXun.Dapper.IRepository;
+    using YunXun.Entity.Models;
+    using YunXun.Entity.ViewModels;
+
+    /// <summary>
+    /// Defines the <see cref="FoodRepository" />.
+    /// </summary>
     public class FoodRepository : RepositoryBase<FoodEntity, int>, IFoodRepository
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FoodRepository"/> class.
+        /// </summary>
+        /// <param name="options">The options<see cref="IOptionsSnapshot{DbOption}"/>.</param>
         public FoodRepository(IOptionsSnapshot<DbOption> options)
         {
             dbOption = options.Get("DBConnect");
@@ -24,11 +30,12 @@ namespace YunXun.Dapper.Repository
             }
             dbConnection = ConnectionFactory.CreateConnection(dbOption.DbType, dbOption.ConnectionString);
         }
+
         /// <summary>
-        /// 获取详细信息
+        /// 获取详细信息.
         /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <param name="Id">.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<FoodEntity>> Detail(int Id)
         {
             string detailSql = @"SELECT * FROM dbo.tbFood WHERE id=@id";
@@ -58,10 +65,9 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 获取总记录数
+        /// 获取总记录数.
         /// </summary>
-        /// <param name="sqlStr">查询语句</param>
-        /// <returns>返回记录总数</returns>
+        /// <returns>返回记录总数.</returns>
         public async Task<BaseResult<FoodEntity>> GetCount()
         {
             string countSql = @"SELECT count(id) FROM dbo.tbFood where IsDelete=0";
@@ -91,11 +97,12 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        ///   获取分页数据
+        /// 获取分页数据.
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageSize">页数</param>
-        /// <returns></returns>
+        /// <param name="pageIndex">页码.</param>
+        /// <param name="pageSize">页数.</param>
+        /// <param name="SortRule">The SortRule<see cref="int"/>.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<FoodEntity>> GetListByPage(int pageIndex, int pageSize, int SortRule = 1)
         {
             string tableName = "tbFood";
@@ -151,10 +158,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 分页  新版
+        /// 分页  新版.
         /// </summary>
-        /// <param name="models"></param>
-        /// <returns></returns>
+        /// <param name="models">.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<FoodEntity>> GetList(QueryDTO models)
         {
             string tableName = "tbFood";
@@ -207,11 +214,12 @@ namespace YunXun.Dapper.Repository
 
             return result;
         }
+
         /// <summary>
-        /// 新增
+        /// 新增.
         /// </summary>
-        /// <param name="entity">数据实体</param>
-        /// <returns>返回主键值</returns>
+        /// <param name="entity">数据实体.</param>
+        /// <returns>返回主键值.</returns>
         public async Task<BaseResult<FoodEntity>> Add(FoodEntity entity)
         {
             string insertSql = @"INSERT INTO dbo.tbFood(name, image,material,method,act) VALUES(@name, @image,@material,@method,@act) select @@identity";
@@ -237,11 +245,12 @@ namespace YunXun.Dapper.Repository
             }
             return result;
         }
+
         /// <summary>
-        /// 修改
+        /// 修改.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<FoodEntity>> Update(FoodEntity entity)
         {
             StringBuilder sb = new StringBuilder();
@@ -266,11 +275,12 @@ namespace YunXun.Dapper.Repository
             }
             return result;
         }
+
         /// <summary>
-        /// 删除
+        /// 删除.
         /// </summary>
-        /// <param name="entity">数据实体</param>
-        /// <returns>返回主键值</returns>
+        /// <param name="entity">数据实体.</param>
+        /// <returns>返回主键值.</returns>
         public async Task<BaseResult<FoodEntity>> Delete(FoodEntity entity)
         {
             StringBuilder sb = new StringBuilder();

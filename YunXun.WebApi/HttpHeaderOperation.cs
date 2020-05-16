@@ -1,16 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-
-namespace YunXun.WebApi
+﻿namespace YunXun.WebApi
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Swashbuckle.AspNetCore.Swagger;
+    using Swashbuckle.AspNetCore.SwaggerGen;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
+    /// <summary>
+    /// Defines the <see cref="HttpHeaderOperation" />.
+    /// </summary>
     public class HttpHeaderOperation : IOperationFilter
     {
+        /// <summary>
+        /// The Apply.
+        /// </summary>
+        /// <param name="operation">The operation<see cref="Operation"/>.</param>
+        /// <param name="context">The context<see cref="OperationFilterContext"/>.</param>
         public void Apply(Operation operation, OperationFilterContext context)
         {
             if (operation.Parameters == null)

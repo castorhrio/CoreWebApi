@@ -1,19 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YunXun.Entity.Models
+﻿namespace YunXun.Entity.Models
 {
+    /// <summary>
+    /// Defines the <see cref="FoodEntity" />.
+    /// </summary>
     public class FoodEntity : BaseEntity<int>
     {
         /// <summary>
-        /// 名称
+        /// Gets or sets the name
+        /// 名称.
         /// </summary>
         public string name { get; set; }
+
         /// <summary>
-        /// 食物图
+        /// Gets or sets the image
+        /// 食物图.
         /// </summary>
         public string image { get; set; }
+
+        /// <summary>
+        /// Gets the imageUrl.
+        /// </summary>
         public string imageUrl
         {
             get
@@ -21,20 +27,28 @@ namespace YunXun.Entity.Models
                 return image == null ? null : UrlFile.UserUrl + image;
             }
         }
+
         /// <summary>
-        /// 原料
+        /// Gets or sets the material
+        /// 原料.
         /// </summary>
         public string material { get; set; }
+
         /// <summary>
-        /// 制法
+        /// Gets or sets the method
+        /// 制法.
         /// </summary>
         public string method { get; set; }
+
         /// <summary>
-        /// 功效
+        /// Gets or sets the act
+        /// 功效.
         /// </summary>
         public string act { get; set; }
+
         /// <summary>
-        ///  删除标记  0未删除 1 删除
+        /// Gets or sets the IsDelete
+        /// 删除标记  0未删除 1 删除.
         /// </summary>
         public int IsDelete { get; set; }
     }

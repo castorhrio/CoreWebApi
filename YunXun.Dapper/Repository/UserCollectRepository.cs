@@ -1,18 +1,26 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using YunXun.Common;
-using YunXun.Dapper.DataFactory;
-using YunXun.Dapper.IRepository;
-using YunXun.Entity.Models;
-using YunXun.Entity.ViewModels;
-using YunXun.Common.DTO;
-namespace YunXun.Dapper.Repository
+﻿namespace YunXun.Dapper.Repository
 {
+    using Microsoft.Extensions.Options;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading.Tasks;
+    using YunXun.Common;
+    using YunXun.Common.DTO;
+    using YunXun.Dapper.DataFactory;
+    using YunXun.Dapper.IRepository;
+    using YunXun.Entity.Models;
+    using YunXun.Entity.ViewModels;
+
+    /// <summary>
+    /// Defines the <see cref="UserCollectRepository" />.
+    /// </summary>
     public class UserCollectRepository : RepositoryBase<UserCollectEntity, int>, IUserCollectRepository
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserCollectRepository"/> class.
+        /// </summary>
+        /// <param name="options">The options<see cref="IOptionsSnapshot{DbOption}"/>.</param>
         public UserCollectRepository(IOptionsSnapshot<DbOption> options)
         {
             dbOption = options.Get("DBConnect");
@@ -22,11 +30,12 @@ namespace YunXun.Dapper.Repository
             }
             dbConnection = ConnectionFactory.CreateConnection(dbOption.DbType, dbOption.ConnectionString);
         }
+
         /// <summary>
-        /// 新增收藏记录
+        /// 新增收藏记录.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<UserCollectEntity>> Add(UserCollectEntity entity)
         {
             string insertSql = @"INSERT INTO dbo.tbUserCollect(userId, objId,type,name,createDate) VALUES(@userId, @objId,@type,@name,getdate()) select @@identity";
@@ -52,14 +61,15 @@ namespace YunXun.Dapper.Repository
             }
             return result;
         }
+
         /// <summary>
-        /// 删除收藏记录
+        /// 删除收藏记录.
         /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <param name="entity">The entity<see cref="UserCollectEntity"/>.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<UserCollectEntity>> Delete(UserCollectEntity entity)
         {
-            
+
             string deleteSql = string.Format("delete tbUserCollect where userId={0} and objId={1} and type={2}", entity.userId, entity.objId, entity.type);
             var result = new BaseResult<UserCollectEntity>();
             try
@@ -78,11 +88,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        ///   获取分页数据
+        /// 获取分页数据.
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageSize">页数</param>
-        /// <returns></returns>
+        /// <param name="modal">The modal<see cref="UserCollectQueryDTO"/>.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<UserCollectEntity>> GetCollectList(UserCollectQueryDTO modal)
         {
             string tableName = "tbUserCollect";
@@ -132,10 +141,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 判断用户是否收藏
+        /// 判断用户是否收藏.
         /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
+        /// <param name="query">.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<IsCollectDTO>> IsCollect(IsCollectDTO query)
         {
             StringBuilder sb = new StringBuilder();

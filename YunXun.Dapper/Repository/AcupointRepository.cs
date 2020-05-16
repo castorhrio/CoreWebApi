@@ -1,20 +1,26 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using YunXun.Common;
-using YunXun.Dapper.DataFactory;
-using YunXun.Dapper.IRepository;
-using YunXun.Entity.Models;
-using YunXun.Entity.ViewModels;
-using YunXun.Common.DTO;
-
-
-namespace YunXun.Dapper.Repository
+﻿namespace YunXun.Dapper.Repository
 {
+    using Microsoft.Extensions.Options;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading.Tasks;
+    using YunXun.Common;
+    using YunXun.Common.DTO;
+    using YunXun.Dapper.DataFactory;
+    using YunXun.Dapper.IRepository;
+    using YunXun.Entity.Models;
+    using YunXun.Entity.ViewModels;
+
+    /// <summary>
+    /// Defines the <see cref="AcupointRepository" />.
+    /// </summary>
     public class AcupointRepository : RepositoryBase<AcupointEntity, int>, IAcupointRepository
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AcupointRepository"/> class.
+        /// </summary>
+        /// <param name="options">The options<see cref="IOptionsSnapshot{DbOption}"/>.</param>
         public AcupointRepository(IOptionsSnapshot<DbOption> options)
         {
             dbOption = options.Get("DBConnect");
@@ -24,11 +30,12 @@ namespace YunXun.Dapper.Repository
             }
             dbConnection = ConnectionFactory.CreateConnection(dbOption.DbType, dbOption.ConnectionString);
         }
+
         /// <summary>
-        /// 获取详细信息
+        /// 获取详细信息.
         /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <param name="Id">.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<AcupointEntity>> Detail(int Id)
         {
             string detailSql = @"SELECT * FROM dbo.tbAcupoint WHERE id=@id";
@@ -57,10 +64,9 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 获取总记录数
+        /// 获取总记录数.
         /// </summary>
-        /// <param name="sqlStr">查询语句</param>
-        /// <returns>返回记录总数</returns>
+        /// <returns>返回记录总数.</returns>
         public async Task<BaseResult<AcupointEntity>> GetCount()
         {
             string countSql = @"SELECT count(id) FROM dbo.tbAcupoint where IsDelete=0";
@@ -90,11 +96,12 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        ///   获取分页数据
+        /// 获取分页数据.
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageSize">页数</param>
-        /// <returns></returns>
+        /// <param name="pageIndex">页码.</param>
+        /// <param name="pageSize">页数.</param>
+        /// <param name="SortRule">The SortRule<see cref="int"/>.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<AcupointEntity>> GetListByPage(int pageIndex, int pageSize, int SortRule = 1)
         {
             string tableName = "tbAcupoint";
@@ -148,6 +155,11 @@ namespace YunXun.Dapper.Repository
             return result;
         }
 
+        /// <summary>
+        /// The GetList.
+        /// </summary>
+        /// <param name="models">The models<see cref="QueryDTO"/>.</param>
+        /// <returns>The <see cref="Task{BaseResult{AcupointEntity}}"/>.</returns>
         public async Task<BaseResult<AcupointEntity>> GetList(QueryDTO models)
         {
             string tableName = "tbAcupoint";
@@ -199,14 +211,15 @@ namespace YunXun.Dapper.Repository
 
             return result;
         }
+
         /// <summary>
-        /// 新增
+        /// 新增.
         /// </summary>
-        /// <param name="entity">数据实体</param>
-        /// <returns>返回主键值</returns>
+        /// <param name="entity">数据实体.</param>
+        /// <returns>返回主键值.</returns>
         public async Task<BaseResult<AcupointEntity>> Add(AcupointEntity entity)
         {
-            
+
             string insertSql = @"INSERT INTO dbo.tbAcupoint(name, findout,overview,info,handle,image) VALUES(@name, @findout,@overview,@info,@handle,@image) select @@identity";
             var result = new BaseResult<AcupointEntity>();
             try
@@ -230,11 +243,12 @@ namespace YunXun.Dapper.Repository
             }
             return result;
         }
+
         /// <summary>
-        /// 修改
+        /// 修改.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<AcupointEntity>> Update(AcupointEntity entity)
         {
 
@@ -260,11 +274,12 @@ namespace YunXun.Dapper.Repository
             }
             return result;
         }
+
         /// <summary>
-        /// 删除
+        /// 删除.
         /// </summary>
-        /// <param name="entity">数据实体</param>
-        /// <returns>返回主键值</returns>
+        /// <param name="entity">数据实体.</param>
+        /// <returns>返回主键值.</returns>
         public async Task<BaseResult<AcupointEntity>> Delete(AcupointEntity entity)
         {
             StringBuilder sb = new StringBuilder();

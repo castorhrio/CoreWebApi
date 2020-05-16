@@ -1,40 +1,57 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using YunXun.Dapper.IRepository;
-using YunXun.Entity.Models;
-using YunXun.Entity.ViewModels;
-using YunXun.Common.DTO;
-using System;
-
-namespace YunXun.WebApi.Controllers
+﻿namespace YunXun.WebApi.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Threading.Tasks;
+    using YunXun.Common.DTO;
+    using YunXun.Dapper.IRepository;
+    using YunXun.Entity.Models;
+    using YunXun.Entity.ViewModels;
+
+    /// <summary>
+    /// Defines the <see cref="UserController" />.
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
+        /// <summary>
+        /// Defines the userRepository.
+        /// </summary>
         private readonly IUserRepository userRepository;
+
+        /// <summary>
+        /// Defines the userCollectRepository.
+        /// </summary>
         private readonly IUserCollectRepository userCollectRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserController"/> class.
+        /// </summary>
+        /// <param name="_userRepository">The _userRepository<see cref="IUserRepository"/>.</param>
+        /// <param name="_userCollectRepository">The _userCollectRepository<see cref="IUserCollectRepository"/>.</param>
         public UserController(IUserRepository _userRepository, IUserCollectRepository _userCollectRepository)
         {
             userRepository = _userRepository;
             userCollectRepository = _userCollectRepository;
         }
+
         /// <summary>
-        /// 注册
+        /// 注册.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<UserEntity>> Add(UserEntity entity)
         {
             return await userRepository.Add(entity);
         }
+
         /// <summary>
-        /// 登录
+        /// 登录.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<UserEntity>> Login(UserEntity entity)
         {
@@ -42,10 +59,10 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 获取用户详细信息
+        /// 获取用户详细信息.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="id">The id<see cref="int"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<UserEntity>> GetDetail(int id)
         {
@@ -53,10 +70,10 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 获取用户分页列表
+        /// 获取用户分页列表.
         /// </summary>
-        /// <param name="modal"></param>
-        /// <returns></returns>
+        /// <param name="modal">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<UserEntity>> GetList(UserQueryDTO modal)
         {
@@ -64,10 +81,10 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 修改密码
+        /// 修改密码.
         /// </summary>
-        /// <param name="modal"></param>
-        /// <returns></returns>
+        /// <param name="modal">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<UserEntity>> Updata(UserDTO modal)
         {
@@ -105,10 +122,10 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 用户收藏
+        /// 用户收藏.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<UserCollectEntity>> Collect(UserCollectEntity entity)
         {
@@ -127,23 +144,24 @@ namespace YunXun.WebApi.Controllers
                 }
             }
             return await userCollectRepository.Add(entity);
-
         }
+
         /// <summary>
-        /// 用户取消收藏
+        /// 用户取消收藏.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<UserCollectEntity>> UnCollect(UserCollectEntity entity)
         {
             return await userCollectRepository.Delete(entity);
         }
+
         /// <summary>
-        /// 用户获取收藏列表
+        /// 用户获取收藏列表.
         /// </summary>
-        /// <param name="modal"></param>
-        /// <returns></returns>
+        /// <param name="modal">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<UserCollectEntity>> GetCollectList(UserCollectQueryDTO modal)
         {
@@ -151,10 +169,10 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 判断对象是否被收藏
+        /// 判断对象是否被收藏.
         /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
+        /// <param name="query">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<IsCollectDTO>> IsCollect(IsCollectDTO query)
         {

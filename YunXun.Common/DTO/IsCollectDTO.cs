@@ -1,24 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YunXun.Common.DTO
+﻿namespace YunXun.Common.DTO
 {
+    /// <summary>
+    /// Defines the <see cref="IsCollectDTO" />.
+    /// </summary>
     public class IsCollectDTO
     {
         /// <summary>
-        /// 用户ID
+        /// Gets or sets the userId
+        /// 用户ID.
         /// </summary>
         public int userId { get; set; }
+
         /// <summary>
-        /// 收藏对象ID
+        /// Gets or sets the objId
+        /// 收藏对象ID.
         /// </summary>
         public int objId { get; set; }
-        private int Type;
+
         /// <summary>
-        /// 收藏类型 0：穴位，1食物，2疾病
+        /// Defines the Type.
         /// </summary>
-        public int type {
+        private int Type;
+
+        /// <summary>
+        /// Gets or sets the type
+        /// 收藏类型 0：穴位，1食物，2疾病.
+        /// </summary>
+        public int type
+        {
 
             get
             {
@@ -36,8 +45,10 @@ namespace YunXun.Common.DTO
                 Type = value;
             }
         }
+
         /// <summary>
-        /// 判断用户是否被收藏
+        /// Gets or sets a value indicating whether isCollect
+        /// 判断用户是否被收藏.
         /// </summary>
         public bool isCollect { get; set; }
     }

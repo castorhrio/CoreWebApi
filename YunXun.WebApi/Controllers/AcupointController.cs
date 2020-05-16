@@ -1,45 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using YunXun.Dapper.IRepository;
-using YunXun.Entity.Models;
-using YunXun.Entity.ViewModels;
-using System.IO;
-using YunXun.Common.DTO;
-using YunXun.Common;
-
-namespace YunXun.WebApi.Controllers
+﻿namespace YunXun.WebApi.Controllers
 {
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
+    using YunXun.Common.DTO;
+    using YunXun.Dapper.IRepository;
+    using YunXun.Entity.Models;
+    using YunXun.Entity.ViewModels;
+
+    /// <summary>
+    /// Defines the <see cref="AcupointController" />.
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AcupointController : ControllerBase
     {
+        /// <summary>
+        /// Defines the acupointRepository.
+        /// </summary>
         private readonly IAcupointRepository acupointRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AcupointController"/> class.
+        /// </summary>
+        /// <param name="_AcupointRepository">The _AcupointRepository<see cref="IAcupointRepository"/>.</param>
         public AcupointController(IAcupointRepository _AcupointRepository)
         {
             acupointRepository = _AcupointRepository;
         }
 
         /// <summary>
-        /// 获取穴位列表 旧版
+        /// 获取穴位列表 旧版.
         /// </summary>
-        /// <param name="pageIndex">下标</param>
-        /// <param name="pageSize">每页大小</param>
-        /// <param name="SortRule">排序方式 1 desc 0 asc</param>
-        /// <returns></returns>
+        /// <param name="pageIndex">下标.</param>
+        /// <param name="pageSize">每页大小.</param>
+        /// <param name="SortRule">排序方式 1 desc 0 asc.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<AcupointEntity>> GetListByPage(int pageIndex, int pageSize, int SortRule)
         {
             return await acupointRepository.GetListByPage(pageIndex, pageSize, SortRule);
         }
+
         /// <summary>
-        /// 获取疾病列表 新版
+        /// 获取疾病列表 新版.
         /// </summary>
-        /// <param name="models"></param>
-        /// <returns></returns>
+        /// <param name="models">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<AcupointEntity>> GetList(QueryDTO models)
         {
@@ -47,20 +56,21 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 获取穴位详细信息
+        /// 获取穴位详细信息.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="id">The id<see cref="int"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<AcupointEntity>> GetDetail(int id)
         {
             return await acupointRepository.Detail(id);
         }
+
         /// <summary>
-        /// 增加
+        /// 增加.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="entity">The entity<see cref="AcupointEntity"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<AcupointEntity>> Add([FromForm]AcupointEntity entity)
         {
@@ -109,11 +119,12 @@ namespace YunXun.WebApi.Controllers
             }
             return await acupointRepository.Add(entity);
         }
+
         /// <summary>
-        /// 修改
+        /// 修改.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="entity">The entity<see cref="AcupointEntity"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<AcupointEntity>> Update([FromForm]AcupointEntity entity)
         {
@@ -149,7 +160,7 @@ namespace YunXun.WebApi.Controllers
                     //保存到数据库
                     //string filePath = savePath.Replace(savePath, "");
                     //string filePath = savePath.Substring(17, savePath.Length - 17);
-                    string filePath =  "/wwwroot/Acupoint/" + newFileName;
+                    string filePath = "/wwwroot/Acupoint/" + newFileName;
                     entity.image = filePath;
                 }
                 else
@@ -163,11 +174,12 @@ namespace YunXun.WebApi.Controllers
 
             return await acupointRepository.Update(entity);
         }
+
         /// <summary>
-        /// 删除
+        /// 删除.
         /// </summary>
-        /// <returns></returns>
-        /// 
+        /// <param name="entity">The entity<see cref="AcupointEntity"/>.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<AcupointEntity>> Delete(AcupointEntity entity)
         {
@@ -181,10 +193,10 @@ namespace YunXun.WebApi.Controllers
         }
 
         /// <summary>
-        /// 批量删除 逻辑删除
+        /// 批量删除 逻辑删除.
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">.</param>
+        /// <returns>.</returns>
         [HttpPost]
         public async Task<BaseResult<AcupointEntity>> DeleteList([FromBody]DeleteDTO model)
         {

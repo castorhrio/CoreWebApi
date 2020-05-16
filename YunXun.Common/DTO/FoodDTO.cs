@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YunXun.Common.DTO
+﻿namespace YunXun.Common.DTO
 {
-   public class FoodDTO
+    /// <summary>
+    /// Defines the <see cref="FoodDTO" />.
+    /// </summary>
+    public class FoodDTO
     {
         /// <summary>
-        /// 
+        /// Gets the Image.
         /// </summary>
         public string Image
         {
@@ -16,29 +15,40 @@ namespace YunXun.Common.DTO
                 return image == null ? null : "https://www.chjb.com" + image;
             }
         }
+
         /// <summary>
-        /// 名称
+        /// Gets or sets the name
+        /// 名称.
         /// </summary>
         public string name { get; set; }
+
         /// <summary>
-        /// 食物图
+        /// Gets or sets the image
+        /// 食物图.
         /// </summary>
         public string image { get; set; }
 
         /// <summary>
-        /// 原料
+        /// Gets or sets the material
+        /// 原料.
         /// </summary>
         public string material { get; set; }
+
         /// <summary>
-        /// 制法
+        /// Gets or sets the method
+        /// 制法.
         /// </summary>
         public string method { get; set; }
+
         /// <summary>
-        /// 功效
+        /// Gets or sets the act
+        /// 功效.
         /// </summary>
         public string act { get; set; }
+
         /// <summary>
-        ///  删除标记  0未删除 1 删除
+        /// Gets or sets the IsDelete
+        /// 删除标记  0未删除 1 删除.
         /// </summary>
         public int IsDelete { get; set; }
     }

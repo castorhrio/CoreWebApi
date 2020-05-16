@@ -1,19 +1,26 @@
-﻿using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using YunXun.Common;
-using YunXun.Dapper.DataFactory;
-using YunXun.Dapper.IRepository;
-using YunXun.Entity.Models;
-using YunXun.Entity.ViewModels;
-using YunXun.Common.DTO;
-
-namespace YunXun.Dapper.Repository
+﻿namespace YunXun.Dapper.Repository
 {
+    using Microsoft.Extensions.Options;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading.Tasks;
+    using YunXun.Common;
+    using YunXun.Common.DTO;
+    using YunXun.Dapper.DataFactory;
+    using YunXun.Dapper.IRepository;
+    using YunXun.Entity.Models;
+    using YunXun.Entity.ViewModels;
+
+    /// <summary>
+    /// Defines the <see cref="UserRepository" />.
+    /// </summary>
     public class UserRepository : RepositoryBase<UserEntity, int>, IUserRepository
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserRepository"/> class.
+        /// </summary>
+        /// <param name="options">The options<see cref="IOptionsSnapshot{DbOption}"/>.</param>
         public UserRepository(IOptionsSnapshot<DbOption> options)
         {
             dbOption = options.Get("DBConnect");
@@ -23,11 +30,12 @@ namespace YunXun.Dapper.Repository
             }
             dbConnection = ConnectionFactory.CreateConnection(dbOption.DbType, dbOption.ConnectionString);
         }
+
         /// <summary>
-        /// 新增
+        /// 新增.
         /// </summary>
-        /// <param name="entity">数据实体</param>
-        /// <returns>返回主键值</returns>
+        /// <param name="entity">数据实体.</param>
+        /// <returns>返回主键值.</returns>
         public async Task<BaseResult<UserEntity>> Add(UserEntity entity)
         {
             var result = new BaseResult<UserEntity>();
@@ -63,9 +71,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 登录
+        /// 登录.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="entity">The entity<see cref="UserEntity"/>.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<UserEntity>> Login(UserEntity entity)
         {
             var result = new BaseResult<UserEntity>();
@@ -95,10 +104,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 删除
+        /// 删除.
         /// </summary>
-        /// <param name="Id">标识</param>
-        /// <returns>影响的行数</returns>
+        /// <param name="Id">标识.</param>
+        /// <returns>影响的行数.</returns>
         public async Task<BaseResult<UserEntity>> Delete(int Id)
         {
             string deleteSql = "update dbo.tbUser SET isDelete=1  WHERE userId=@userId";
@@ -126,10 +135,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 批量删除
+        /// 批量删除.
         /// </summary>
-        /// <param name="Id">标识</param>
-        /// <returns>影响的行数</returns>
+        /// <param name="Ids">The Ids<see cref="int[]"/>.</param>
+        /// <returns>影响的行数.</returns>
         public async Task<BaseResult<UserEntity>> DeleteList(int[] Ids)
         {
             string deleteSql = "update dbo.tbUser SET isDelete=1  WHERE userId in @userIds";
@@ -157,10 +166,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 按条件删除
+        /// 按条件删除.
         /// </summary>
-        /// <param name="Id">主键标识</param>
-        /// <returns>受影响都行数</returns>
+        /// <param name="conditionStr">The conditionStr<see cref="string"/>.</param>
+        /// <returns>受影响都行数.</returns>
         public async Task<BaseResult<UserEntity>> DeleteBy(string conditionStr)
         {
             string deleteSql = "UPDATE dbo.tbUser SET IsDelete=1 WHERE 1=1 and  " + conditionStr;
@@ -188,10 +197,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 更新
+        /// 更新.
         /// </summary>
-        /// <param name="entity">实体对象</param>
-        /// <returns></returns>
+        /// <param name="modal">The modal<see cref="UserDTO"/>.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<UserEntity>> Update(UserDTO modal)
         {
             string updateSql = string.Format(@"UPDATE dbo.tbUser SET passWord='{0}',isManager={1} where userId={2}", modal.newPassword, modal.isManager, modal.userId);
@@ -217,9 +226,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 查询列表
+        /// 查询列表.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="modal">The modal<see cref="UserQueryDTO"/>.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<UserEntity>> GetList(UserQueryDTO modal)
         {
             string tableName = "tbUser";
@@ -239,7 +249,7 @@ namespace YunXun.Dapper.Repository
             }
             int skip = (modal.pageIndex - 1) * modal.pageSize + 1;
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat(@"SELECT COUNT(1) FROM {0} WHERE 1=1;", tableName,  where);
+            sb.AppendFormat(@"SELECT COUNT(1) FROM {0} WHERE 1=1;", tableName, where);
             sb.AppendFormat(@"SELECT  *
                                 FROM(SELECT ROW_NUMBER() OVER(ORDER BY {1}) AS RowNum,*
                                           FROM  {0}
@@ -273,10 +283,10 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 获取用户详细信息
+        /// 获取用户详细信息.
         /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <param name="Id">.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<UserEntity>> Detail(int Id)
         {
             string detailSql = string.Format(@"SELECT *  FROM dbo.tbUser WHERE userId={0}", Id);
@@ -306,10 +316,9 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        /// 获取总记录数
+        /// 获取总记录数.
         /// </summary>
-        /// <param name="sqlStr">查询语句</param>
-        /// <returns>返回记录总数</returns>
+        /// <returns>返回记录总数.</returns>
         public async Task<BaseResult<UserEntity>> GetCount()
         {
             string countSql = @"SELECT count(userId) FROM dbo.tbUser where IsDelete=0";
@@ -339,11 +348,12 @@ namespace YunXun.Dapper.Repository
         }
 
         /// <summary>
-        ///   获取分页数据
+        /// 获取分页数据.
         /// </summary>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageSize">页数</param>
-        /// <returns></returns>
+        /// <param name="pageIndex">页码.</param>
+        /// <param name="pageSize">页数.</param>
+        /// <param name="SortRule">The SortRule<see cref="int"/>.</param>
+        /// <returns>.</returns>
         public async Task<BaseResult<UserEntity>> GetListByPage(int pageIndex, int pageSize, int SortRule = 1)
         {
             string tableName = "tbUser";

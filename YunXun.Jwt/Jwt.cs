@@ -1,27 +1,46 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace YunXun.Jwt
+﻿namespace YunXun.Jwt
 {
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Security.Cryptography;
+
+    /// <summary>
+    /// Defines the <see cref="Jwt" />.
+    /// </summary>
     public class Jwt : IJwt
     {
+        /// <summary>
+        /// Defines the _configuration.
+        /// </summary>
         private IConfiguration _configuration;
+
+        /// <summary>
+        /// Defines the _base64Secret.
+        /// </summary>
         private string _base64Secret;
+
+        /// <summary>
+        /// Defines the _jwtConfig.
+        /// </summary>
         private JwtEntity _jwtConfig = new JwtEntity();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Jwt"/> class.
+        /// </summary>
+        /// <param name="configration">The configration<see cref="IConfiguration"/>.</param>
         public Jwt(IConfiguration configration)
         {
             this._configuration = configration;
             configration.GetSection("Jwt").Bind(_jwtConfig);
             GetSecret();
         }
+
         /// <summary>
-        /// 获取到加密串
+        /// 获取到加密串.
         /// </summary>
         private void GetSecret()
         {
@@ -34,11 +53,12 @@ namespace YunXun.Jwt
                 this._base64Secret = Convert.ToBase64String(hashmessage);
             }
         }
+
         /// <summary>
-        /// 生成Token
+        /// 生成Token.
         /// </summary>
-        /// <param name="Claims"></param>
-        /// <returns></returns>
+        /// <param name="Claims">.</param>
+        /// <returns>.</returns>
         public string GetToken(Dictionary<string, string> Claims)
         {
             List<Claim> claimsAll = new List<Claim>();
@@ -63,11 +83,11 @@ namespace YunXun.Jwt
         }
 
         /// <summary>
-        /// 验证Token
+        /// 验证Token.
         /// </summary>
-        /// <param name="Token"></param>
-        /// <param name="Clims"></param>
-        /// <returns></returns>
+        /// <param name="Token">.</param>
+        /// <param name="Clims">.</param>
+        /// <returns>.</returns>
         public bool ValidateToken(string Token, out Dictionary<string, string> Clims)
         {
             Clims = new Dictionary<string, string>();

@@ -1,21 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Loader;
-using System.Threading.Tasks;
-
-namespace YunXun.WebApi.Unit
+﻿namespace YunXun.WebApi.Unit
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.Loader;
+
+    /// <summary>
+    /// Defines the <see cref="reflectHelper" />.
+    /// </summary>
     [ApiExplorerSettings(IgnoreApi = true)]
     public class reflectHelper
     {
         /// <summary>
-        /// 获取项目程序集
+        /// 获取项目程序集.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>.</returns>
         public static IList<Assembly> GetAllAssemblies()
         {
             List<Assembly> list = new List<Assembly>();
@@ -38,19 +40,19 @@ namespace YunXun.WebApi.Unit
         }
 
         /// <summary>
-        /// 根据程序集名称获取程序集类
+        /// 根据程序集名称获取程序集类.
         /// </summary>
-        /// <param name="assemblyName"></param>
-        /// <returns></returns>
+        /// <param name="assemblyName">.</param>
+        /// <returns>.</returns>
         public static Assembly GetAssembly(string assemblyName)
         {
             return GetAllAssemblies().FirstOrDefault(f => f.FullName.Contains(assemblyName));
         }
 
         /// <summary>
-        ///获取所有程序集类
+        /// 获取所有程序集类.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>.</returns>
         public static IList<Type> GetAllTypes()
         {
             List<Type> list = new List<Type>();
@@ -66,10 +68,10 @@ namespace YunXun.WebApi.Unit
         }
 
         /// <summary>
-        /// 根据AssemblyName获取所有的类
+        /// 根据AssemblyName获取所有的类.
         /// </summary>
-        /// <param name="assemblyName"></param>
-        /// <returns></returns>
+        /// <param name="assemblyName">.</param>
+        /// <returns>.</returns>
         public static IList<Type> GetTypesByAssembly(string assemblyName)
         {
             List<Type> list = new List<Type>();
@@ -82,6 +84,12 @@ namespace YunXun.WebApi.Unit
             return list;
         }
 
+        /// <summary>
+        /// The GetImplementType.
+        /// </summary>
+        /// <param name="typeName">The typeName<see cref="string"/>.</param>
+        /// <param name="baseInterfaceType">The baseInterfaceType<see cref="Type"/>.</param>
+        /// <returns>The <see cref="Type"/>.</returns>
         public static Type GetImplementType(string typeName, Type baseInterfaceType)
         {
             return GetAllTypes().FirstOrDefault(t =>

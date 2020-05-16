@@ -1,23 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using NLog.Web;
-
-namespace YunXunWebApi
+﻿namespace YunXunWebApi
 {
+    using Microsoft.AspNetCore;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Logging;
+    using NLog.Web;
+
+    /// <summary>
+    /// Defines the <see cref="Program" />.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// The Main.
+        /// </summary>
+        /// <param name="args">The args<see cref="string[]"/>.</param>
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
         }
 
+        /// <summary>
+        /// The CreateWebHostBuilder.
+        /// </summary>
+        /// <param name="args">The args<see cref="string[]"/>.</param>
+        /// <returns>The <see cref="IWebHostBuilder"/>.</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>().ConfigureLogging(logging =>

@@ -1,31 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YunXun.Common.DTO
+﻿namespace YunXun.Common.DTO
 {
+    /// <summary>
+    /// Defines the <see cref="UserDTO" />.
+    /// </summary>
     public class UserDTO
     {
-        public int userId { get; set; }
         /// <summary>
-        /// 用户名 必传
+        /// Gets or sets the userId.
+        /// </summary>
+        public int userId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the userName
+        /// 用户名 必传.
         /// </summary>
         public string userName { get; set; }
+
         /// <summary>
-        /// 旧密码
+        /// Gets or sets the oldPassWord
+        /// 旧密码.
         /// </summary>
         public string oldPassWord { get; set; }
+
         /// <summary>
-        /// 年龄
+        /// Gets or sets the age
+        /// 年龄.
         /// </summary>
         public int age { get; set; }
+
         /// <summary>
-        /// 是否删除
+        /// Gets or sets the isDelete
+        /// 是否删除.
         /// </summary>
         public int isDelete { get; set; }
-        private int IsManager;
+
         /// <summary>
-        /// 是否管理员1是0不是
+        /// Defines the IsManager.
+        /// </summary>
+        private int IsManager;
+
+        /// <summary>
+        /// Gets or sets the isManager
+        /// 是否管理员1是0不是.
         /// </summary>
         public int isManager
         {
@@ -43,16 +59,22 @@ namespace YunXun.Common.DTO
                 IsManager = value;
             }
         }
+
         /// <summary>
-        /// 管理员
+        /// Gets or sets the editManager
+        /// 管理员.
         /// </summary>
         public string editManager { get; set; }
+
         /// <summary>
-        /// 新密码
+        /// Gets or sets the newPassword
+        /// 新密码.
         /// </summary>
         public string newPassword { get; set; }
+
         /// <summary>
-        /// 确认密码
+        /// Gets or sets the comfirPassword
+        /// 确认密码.
         /// </summary>
         public string comfirPassword { get; set; }
     }

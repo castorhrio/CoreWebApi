@@ -1,40 +1,62 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using YunXun.WebApi.Unit;
-using YunXun.WebApi;
-using Microsoft.Extensions.PlatformAbstractions;
-using YunXun.Jwt;
-using Microsoft.AspNetCore.Mvc;
-using YunXun.Dapper.DataFactory;
-
-namespace YunXunWebApi
+﻿namespace YunXunWebApi
 {
+    using Autofac;
+    using Autofac.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.PlatformAbstractions;
+    using Swashbuckle.AspNetCore.Swagger;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using YunXun.Dapper.DataFactory;
+    using YunXun.WebApi;
+    using YunXun.WebApi.Unit;
 
+    /// <summary>
+    /// Defines the <see cref="Startup" />.
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Gets or sets the CurrentEnvironment.
+        /// </summary>
         private IHostingEnvironment CurrentEnvironment { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="configuration">The configuration<see cref="IConfiguration"/>.</param>
+        /// <param name="env">The env<see cref="IHostingEnvironment"/>.</param>
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             CurrentEnvironment = env;
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Gets the Configuration.
+        /// </summary>
         public IConfiguration Configuration { get; }
+
+        /// <summary>
+        /// Gets the ApplicationContainer.
+        /// </summary>
         public IContainer ApplicationContainer { get; private set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// The ConfigureServices.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
+        /// <returns>The <see cref="IServiceProvider"/>.</returns>
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.Configure<DbOption>("DBConnect", Configuration.GetSection("DbOpion"));
-            #region  添加SwaggerUI
 
             services.AddSwaggerGen(options =>
             {
@@ -50,9 +72,8 @@ namespace YunXunWebApi
                 options.OperationFilter<HttpHeaderOperation>(); // 添加httpHeader参数
             });
 
-            #endregion
             // services.AddTransient<IJwt, Jwt>();//Jwt注入
-           // 解决跨域问题
+            // 解决跨域问题
             services.AddCors(options =>
               {
 
@@ -70,7 +91,6 @@ namespace YunXunWebApi
             {
                 o.Filters.Add(typeof(GlobalExceptions));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            #region 依赖注入
 
             var builder = new ContainerBuilder();//实例化容器
                                                  //注册所有模块module
@@ -82,10 +102,13 @@ namespace YunXunWebApi
             builder.Populate(services);
 
             return new AutofacServiceProvider(builder.Build()); //第三方IOC接管 core内置DI容器 
-            #endregion
-
         }
 
+        /// <summary>
+        /// The Configure.
+        /// </summary>
+        /// <param name="app">The app<see cref="IApplicationBuilder"/>.</param>
+        /// <param name="env">The env<see cref="IHostingEnvironment"/>.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -94,7 +117,6 @@ namespace YunXunWebApi
             }
             app.UseCors("cors");
             //app.UseJwt();
-            #region 使用SwaggerUI
 
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -102,7 +124,6 @@ namespace YunXunWebApi
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
             });
 
-            #endregion
             app.UseMvc();
 
             app.UseMvc(routes =>
